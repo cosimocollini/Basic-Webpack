@@ -1,5 +1,3 @@
-# Webpack basic configuration
-
 # What i learned
 
 It took me a while to really understand how a configuration like this works behind the scenes, but after a bit of research, I can manage my configuration based on the project I'm developing.
