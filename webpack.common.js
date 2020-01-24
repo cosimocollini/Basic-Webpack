@@ -10,7 +10,7 @@ module.exports = {
         use: ["html-loader"]
       },
       {
-        test: /\.(png|svg|jpg|gif)$/,
+        test: /\.(ttf|png|svg|jpg|gif)$/,
         use: {
           loader: "file-loader",
           options: {
