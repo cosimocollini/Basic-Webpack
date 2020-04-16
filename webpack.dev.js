@@ -33,7 +33,7 @@ module.exports = merge(common, {
     contentBase: path.join(__dirname, "dist"),
     compress: true,
     open: true,
-    host: '192.168.1.138',
+    host: '0.0.0.0',
     port: 3000,
   }
 });
