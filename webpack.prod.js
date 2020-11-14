@@ -10,10 +10,31 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 module.exports = merge(common, {
   mode: "production",
   output: {
-    filename: "[name].js",
-    path: path.resolve(__dirname, "dist")
+    path: path.resolve(__dirname, './dist'),
+    publicPath: '/',
+    filename: 'js/[name].[contenthash].bundle.js',
+  },
+  plugins: [
+    new MiniCssExtractPlugin({
+      filename: 'styles/[name].[contenthash].css',
+      chunkFilename: "[id].css"
+    })
+  ],
+  module: {
+    rules: [
+      {
+        test: /\.(scss|css)$/,
+        use: [
+          MiniCssExtractPlugin.loader,
+          "css-loader",
+          "postcss-loader",
+          "sass-loader"
+        ]
+      }
+    ]
   },
   optimization: {
+    minimize: true,
     minimizer: [
       new OptimizeCssAssetsPlugin(),
       new TerserPlugin({
@@ -23,46 +44,7 @@ module.exports = merge(common, {
           },
         },
         extractComments: false,
-      }),
-      new HtmlWebpackPlugin({
-        template: "./src/index.html",
-        favicon: "src/img/logo.png",
-        minify: {
-          removeAttributeQuotes: true,
-          collapseWhitespace: true,
-          removeComments: true
-        }
       })
     ]
-  },
-  plugins: [
-    new MiniCssExtractPlugin({
-      filename: "[name].css",
-      chunkFilename: "[id].css"
-    }),
-    new CleanWebpackPlugin()
-  ],
-  module: {
-    rules: [
-      {
-        test: /\.scss$/,
-        use: [
-          MiniCssExtractPlugin.loader,
-          "css-loader",
-          "postcss-loader",
-          "sass-loader"
-        ]
-      },
-      {
-        test: /\.m?js$/,
-        exclude: /(node_modules|bower_components)/,
-        use: {
-          loader: 'babel-loader',
-          options: {
-            presets: ['@babel/preset-env']
-          }
-        }
-      }
-    ],
   }
 });

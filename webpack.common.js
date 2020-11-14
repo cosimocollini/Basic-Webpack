@@ -1,13 +1,34 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 
 module.exports = {
-  entry: "./src/index.js",
+  entry: path.resolve(__dirname, './src/index.js'),
+  output: {
+    path: path.resolve(__dirname, './dist'),
+    filename: '[name].bundle.js',
+    publicPath: '/',
+  },
+  plugins: [
+    new CleanWebpackPlugin(),
+
+    new HtmlWebpackPlugin({
+      title: 'Sdg',
+      favicon: path.resolve(__dirname, './src/img/favicon.png'),
+      template: path.resolve(__dirname, './src/index.html'),
+      filename: 'index.html',
+    }),
+  ],
   module: {
     rules: [
       {
-        test: /\.html$/,
-        use: ["html-loader"]
+        test: /\.(scss|css)$/,
+        use: [
+          'style-loader',
+          {loader: 'css-loader', options: {sourceMap: true, importLoaders: 1}},
+          {loader: 'postcss-loader', options: {sourceMap: true}},
+          {loader: 'sass-loader', options: {sourceMap: true}},
+        ],
       },
       {
         test: /\.(jpeg|png|svg)$/,
