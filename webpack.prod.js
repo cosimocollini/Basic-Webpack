@@ -1,6 +1,6 @@
 const path = require("path");
 const common = require("./webpack.common");
-const merge = require("webpack-merge");
+const {merge} = require("webpack-merge");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const OptimizeCssAssetsPlugin = require("optimize-css-assets-webpack-plugin");
@@ -10,15 +10,16 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 module.exports = merge(common, {
   mode: "production",
   output: {
-    path: path.resolve(__dirname, './dist'),
-    publicPath: '/',
-    filename: 'js/[name].[contenthash].bundle.js',
+    path: path.resolve(__dirname, "./dist"),
+    publicPath: "/",
+    filename: "js/[name].[contenthash].bundle.js",
+    assetModuleFilename: "images/[name][ext]",
   },
   plugins: [
     new MiniCssExtractPlugin({
-      filename: 'styles/[name].[contenthash].css',
-      chunkFilename: "[id].css"
-    })
+      filename: "styles/[name].[contenthash].css",
+      chunkFilename: "[id].css",
+    }),
   ],
   module: {
     rules: [
@@ -28,10 +29,10 @@ module.exports = merge(common, {
           MiniCssExtractPlugin.loader,
           "css-loader",
           "postcss-loader",
-          "sass-loader"
-        ]
-      }
-    ]
+          "sass-loader",
+        ],
+      },
+    ],
   },
   optimization: {
     minimize: true,
@@ -44,7 +45,7 @@ module.exports = merge(common, {
           },
         },
         extractComments: false,
-      })
-    ]
-  }
+      }),
+    ],
+  },
 });

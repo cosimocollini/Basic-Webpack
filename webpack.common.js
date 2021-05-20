@@ -3,20 +3,20 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 
 module.exports = {
-  entry: path.resolve(__dirname, './src/index.js'),
+  entry: path.resolve(__dirname, "./src/index.js"),
   output: {
-    path: path.resolve(__dirname, './dist'),
-    filename: '[name].bundle.js',
-    publicPath: '/',
+    path: path.resolve(__dirname, "./dist"),
+    filename: "[name].bundle.js",
+    publicPath: "/",
   },
   plugins: [
     new CleanWebpackPlugin(),
 
     new HtmlWebpackPlugin({
-      title: 'Sdg',
-      favicon: path.resolve(__dirname, './src/img/favicon.png'),
-      template: path.resolve(__dirname, './src/index.html'),
-      filename: 'index.html',
+      title: "Sdg",
+      favicon: path.resolve(__dirname, "./src/img/favicon.png"),
+      template: path.resolve(__dirname, "./src/index.html"),
+      filename: "index.html",
     }),
   ],
   module: {
@@ -24,29 +24,23 @@ module.exports = {
       {
         test: /\.(scss|css)$/,
         use: [
-          'style-loader',
-          {loader: 'css-loader', options: {sourceMap: true, importLoaders: 1}},
-          {loader: 'postcss-loader', options: {sourceMap: true}},
-          {loader: 'sass-loader', options: {sourceMap: true}},
+          "style-loader",
+          {
+            loader: "css-loader",
+            options: { sourceMap: true, importLoaders: 1 },
+          },
+          { loader: "postcss-loader", options: { sourceMap: true } },
+          { loader: "sass-loader", options: { sourceMap: true } },
         ],
       },
       {
-        test: /\.(jpeg|png|svg)$/,
-        use: {
-          loader: "file-loader",
-          options: {
-            name: "[name].[ext]",
-            outputPath: "img"
-          }
-        }
+        test: /\.(png|svg|jpg|jpeg|gif)$/i,
+        type: "asset/resource",
       },
       {
-        test: /\.woff(2)?(\?[a-z0-9]+)?$/,
-        loader: "url-loader?limit=10000&mimetype=application/font-woff"
-      }, {
-        test: /\.(ttf|eot)(\?[a-z0-9]+)?$/,
-        loader: "file-loader"
-      }
-    ]
-  }
+        test: /\.(woff|woff2|eot|ttf|otf)$/i,
+        type: "asset/resource",
+      },
+    ],
+  },
 };
